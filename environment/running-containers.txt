@@ -1,0 +1,20 @@
+NAMES           STATUS
+snare           Up About an hour
+tanner          Up About an hour
+kibana          Up About an hour (healthy)
+logstash        Up About an hour (healthy)
+tanner_api      Up About an hour
+rdphoneypot     Up About an hour
+nginx           Up About an hour
+elasticsearch   Up About an hour (healthy)
+honeytrap       Up About an hour
+p0f             Up About an hour
+tanner_phpox    Up About an hour
+wordpot         Up About an hour
+heralding       Up About an hour
+dionaea         Up About an hour (healthy)
+suricata        Up About an hour
+cowrie          Up About an hour
+tanner_redis    Up About an hour
+fatt            Up About an hour
+tpotinit        Up About an hour (healthy)

@@ -1,0 +1,2 @@
+hsen@debian:~/tpotce$ git -C ~/tpotce describe --tags 2>/dev/null || git -C ~/tpotce log -1 --oneline   # record the T-Pot version
+24.04.1-135-g6a4003ba

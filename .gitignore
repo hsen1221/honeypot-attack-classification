@@ -1,0 +1,74 @@
+# ============================================================
+#  .gitignore — T-Pot + AI attack-classification project
+# ============================================================
+
+# ---- large / regenerable raw data (regenerate via export_events.py) ----
+02-raw-data/es-events/
+02-raw-data/attack-logs/
+
+# ---- ALL backup copies made during editing (git is the versioning now) ----
+*.bak
+*.bak-*
+*.bak.*
+*_backup
+*~
+
+# ---- ALL stale/discarded data folders we created during fixes ----
+_stale-*/
+**/_stale-*/
+02-raw-data/_stale-*/
+
+# ---- docker-compose frozen snapshots (keep only the live one) ----
+docker-compose_frozen-*.yml
+
+# ---- trained model binaries (regenerable by retraining) ----
+# comment out if you WANT the .pkl versioned
+05-models/*.pkl
+
+# ---- screenshots / large binaries ----
+06-screenshots/
+*.rar
+*.zip
+*.7z
+
+# ---- secrets / never commit ----
+*credentials*
+*secret*
+*.env
+*.pem
+*.key
+id_rsa*
+
+# ---- python / jupyter cruft ----
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+.venv/
+venv/
+.python-version
+
+# ---- OS cruft ----
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ============================================================
+#  KEPT (NOT ignored) — listed for clarity, no action needed:
+#    03-scripts/*.py              all pipeline scripts
+#    03-scripts/wordlists/*.txt   wordlists  <-- explicitly kept
+#    01-run-ledger/run-ledger.csv the ledger
+#    04-features/*.csv            feature datasets
+#    05-models/feature_columns.json, model_params.json, *.csv
+#    *.ipynb   *.md   docker-compose.yml
+# ============================================================
+# ---- images / exported plots (large binaries, regenerable from notebooks) ----
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.svg
+*.tif
+*.tiff
+*.webp

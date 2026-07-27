@@ -1,0 +1,10 @@
+root
+admin
+administrator
+user
+test
+oracle
+ubuntu
+pi
+guest
+mysql
