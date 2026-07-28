@@ -1,0 +1,22 @@
+{
+  "model": "RandomForestClassifier",
+  "role": "candidate (Notebook 3 selects the deployed model)",
+  "params": {
+    "criterion": "gini",
+    "max_depth": null,
+    "max_features": null,
+    "min_samples_leaf": 1,
+    "min_samples_split": 2,
+    "n_estimators": 300,
+    "random_state": 42,
+    "n_jobs": -1
+  },
+  "n_features": 32,
+  "n_train_rows": 150,
+  "cv_accuracy": 0.98,
+  "cv_accuracy_std": 0.0163,
+  "cv_macro_f1": 0.9799,
+  "sklearn_version": "1.9.0",
+  "numpy_version": "2.3.5",
+  "saved_utc": "2026-07-28T21:54:54+00:00"
+}

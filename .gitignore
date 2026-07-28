@@ -23,10 +23,10 @@ docker-compose_frozen-*.yml
 
 # ---- trained model binaries (regenerable by retraining) ----
 # comment out if you WANT the .pkl versioned
-05-models/*.pkl
+06-models/*.pkl
 
 # ---- screenshots / large binaries ----
-06-screenshots/
+08-screenshots/
 *.rar
 *.zip
 *.7z
