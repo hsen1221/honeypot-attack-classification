@@ -1,0 +1,27 @@
+{
+  "deployed_model": "XGBoost",
+  "params": {
+    "colsample_bytree": 0.8,
+    "learning_rate": 0.03,
+    "max_depth": 3,
+    "min_child_weight": 1,
+    "n_estimators": 400,
+    "subsample": 1.0
+  },
+  "cv_accuracy": 0.9867,
+  "cv_macro_f1": 0.9866,
+  "errors": 2,
+  "n_features": 32,
+  "n_train_rows": 150,
+  "class_order": [
+    "scan",
+    "brute_force",
+    "post_exploitation",
+    "web_attack",
+    "denial_of_service"
+  ],
+  "sklearn_version": "1.9.0",
+  "xgboost_version": "3.2.0",
+  "numpy_version": "2.3.5",
+  "saved_utc": "2026-07-29T21:02:19+00:00"
+}
