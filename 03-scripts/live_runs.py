@@ -7,9 +7,13 @@ ONE complete attack run, then classifies that whole run with the deployed XGBoos
 model. Matches how the model was trained (on complete runs) and cleanly separates
 sequential attacks from a single attacker without any fixed sliding window.
 
+Each classified run is ALSO written as one document to the Elasticsearch index
+'ml-predictions' (for the Kibana dashboard). The write can never crash the classifier
+— on any failure it just prints a warning and the classification still stands.
+
 Reuses the project feature extractor (extract_features.py) so live features match
-training exactly. Everything else (ES query, model loading, prediction) lives in
-this one file.
+training exactly. Everything else (ES query, model loading, prediction, dashboard
+write) lives in this one file.
 
 USAGE (on Kali, tunnel open):
     python3 live_runs.py                 # default 30s idle gap: scan/brute/post-exploit/web
@@ -46,6 +50,7 @@ MODEL_DIR   = "/mnt/c/tpot-project/06-models"
 MODEL_PATH  = os.path.join(MODEL_DIR, "deployed_model.pkl")
 COLS_PATH   = os.path.join(MODEL_DIR, "feature_columns.json")
 LABELS_PATH = os.path.join(MODEL_DIR, "class_labels.json")
+PRED_INDEX  = "ml-predictions"   # where classified runs are written for Kibana
 PAD         = 3   # +/- seconds around a run when pulling its events (matches training pad)
 
 # ---------------------------------------------------------------- ES + model helpers
@@ -83,6 +88,48 @@ def load_model():
     class_labels = json.load(open(LABELS_PATH))   # index = integer id -> class name
     cols = json.load(open(COLS_PATH))             # 32 feature names, exact order
     return model, class_labels, cols
+
+def ensure_index():
+    """Create the predictions index with an explicit, Kibana-friendly mapping (idempotent)."""
+    try:
+        if requests.head(f"{ES}/{PRED_INDEX}", timeout=15).status_code == 200:
+            return  # already exists — leave it
+        mapping = {"mappings": {"properties": {
+            "@timestamp":      {"type": "date"},
+            "predicted_class": {"type": "keyword"},
+            "confidence":      {"type": "float"},
+            "event_count":     {"type": "integer"},
+            "duration_sec":    {"type": "float"},
+            "run_start":       {"type": "date"},
+            "run_end":         {"type": "date"},
+            "probs": {"properties": {c: {"type": "float"} for c in
+                      ["scan","brute_force","post_exploitation","web_attack","denial_of_service"]}},
+        }}}
+        r = requests.put(f"{ES}/{PRED_INDEX}", json=mapping, timeout=30)
+        print(f"created index '{PRED_INDEX}' (HTTP {r.status_code})")
+    except Exception as e:
+        print(f"(could not create dashboard index: {e} — classification will still work)")
+
+def write_prediction(pred, ranked, feats, run_start, run_end):
+    """POST one classified run to the predictions index. NEVER crashes the classifier."""
+    try:
+        doc = {
+            "@timestamp":      iso(run_end),                    # when the run finished
+            "predicted_class": pred,
+            "confidence":      round(float(dict(ranked)[pred]), 4),
+            "event_count":     int(feats.get("total_events", 0)),
+            "duration_sec":    round((run_end - run_start).total_seconds(), 1),
+            "run_start":       iso(run_start),
+            "run_end":         iso(run_end),
+            "probs":           {c: round(float(p), 4) for c, p in ranked},
+        }
+        r = requests.post(f"{ES}/{PRED_INDEX}/_doc", json=doc, timeout=15)
+        if r.status_code in (200, 201):
+            print(f"  \u2713 written to dashboard index '{PRED_INDEX}'")
+        else:
+            print(f"  (dashboard write failed: HTTP {r.status_code} — classification still valid)")
+    except Exception as e:
+        print(f"  (dashboard write skipped: {e} — classification still valid)")
 
 def classify_docs(docs, model, class_labels, cols):
     """Extract features from docs and return (pred_name, ranked_probs, feats)."""
@@ -125,10 +172,12 @@ def classify_run(model, class_labels, cols, run_start, last_activity, min_events
         return
     pred, ranked, feats = classify_docs(run_docs, model, class_labels, cols)
     announce(pred, ranked, feats, run_start, last_activity)
+    write_prediction(pred, ranked, feats, run_start, last_activity)
 
 def run(poll, idle, min_events, max_run):
     print("loading deployed model...")
     model, class_labels, cols = load_model()
+    ensure_index()
     print(f"model loaded  |  poll={poll:g}s  idle-gap={idle:g}s  "
           f"min-events={min_events}  max-run={max_run:g}s\n")
     print("watching the honeypot — run attacks one at a time, spaced > idle-gap apart.")
