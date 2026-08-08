@@ -1,6 +1,6 @@
 model,scaled,cv_accuracy,acc_std,cv_macro_f1,errors
 XGBoost,False,0.9867,0.0163,0.9866,2
-SVM (RBF),True,0.9867,0.0163,0.9866,2
+SVM (linear),True,0.9867,0.0163,0.9866,2
 KNN,True,0.9867,0.0163,0.9866,2
 MLP,True,0.98,0.0267,0.98,3
 Random Forest,False,0.98,0.0163,0.9799,3

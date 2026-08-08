@@ -5,7 +5,7 @@ ES, SRC = "http://localhost:64298", "192.168.32.1"
 
 rows = [r for r in csv.DictReader(open(LEDGER, newline="")) if r["run_id"].startswith("B")]
 if not rows:
-    print("No B### rows yet — run the brute-force campaign first."); raise SystemExit
+    print("No B### rows yet — run the online-guessing campaign first."); raise SystemExit
 start = min(r["start_time_utc"] for r in rows)
 end   = max(r["end_time_utc"]   for r in rows)
 win   = {"range": {"@timestamp": {"gte": start, "lte": end}}}

@@ -15,7 +15,7 @@
   "n_train_rows": 150,
   "class_order": [
     "scan",
-    "brute_force",
+    "online_guessing",
     "post_exploitation",
     "web_attack",
     "denial_of_service"
@@ -23,5 +23,5 @@
   "sklearn_version": "1.9.0",
   "xgboost_version": "3.2.0",
   "numpy_version": "2.3.5",
-  "saved_utc": "2026-07-29T21:02:19+00:00"
+  "saved_utc": "2026-08-07T19:41:20+00:00"
 }

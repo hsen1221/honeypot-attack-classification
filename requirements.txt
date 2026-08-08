@@ -1,0 +1,9 @@
+pandas
+numpy
+scikit-learn==1.9.0
+xgboost==3.2.0
+matplotlib
+seaborn
+requests
+joblib
+jupyter

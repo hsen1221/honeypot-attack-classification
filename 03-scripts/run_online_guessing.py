@@ -7,7 +7,7 @@ LOG_DIR = "/mnt/c/tpot-project/02-raw-data/attack-logs"
 WL      = "/mnt/c/tpot-project/03-scripts/wordlists"
 TARGET  = "192.168.32.138"
 SRC     = "192.168.32.1"
-LABEL   = "brute_force"
+LABEL   = "online_guessing"
 PREFIX  = "B"
 COOLDOWN = 60
 MAX_RUNS = None
@@ -88,7 +88,7 @@ def main():
     done = rows_done()
     todo = cmds[done:][:MAX_RUNS] if MAX_RUNS is not None else cmds[done:]
     if not todo:
-        print("Nothing to run — ledger already has all brute-force runs."); return
+        print("Nothing to run — ledger already has all online-guessing runs."); return
 
     with open(LEDGER, "a", newline="") as f:
         w = csv.DictWriter(f, fieldnames=COLUMNS)

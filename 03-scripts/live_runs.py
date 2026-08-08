@@ -16,13 +16,13 @@ training exactly. Everything else (ES query, model loading, prediction, dashboar
 write) lives in this one file.
 
 USAGE (on Kali, tunnel open):
-    python3 live_runs.py                 # default 30s idle gap: scan/brute/post-exploit/web
+    python3 live_runs.py                 # default 30s idle gap: scan/guessing/post-exploit/web
     python3 live_runs.py --idle 120      # DoS: its Suricata FLOW events log ~60-90s late
 
 Stop with Ctrl+C.
 
 WHY the idle gap differs (measured on this setup): scan ~3s / web ~10s internal gaps ->
-30s is safe. brute-force / post-exploit ~60s and DoS ~87s gaps are LATE LOGGING, not the
+30s is safe. online-guessing / post-exploit ~60s and DoS ~87s gaps are LATE LOGGING, not the
 attack; 30s classifies the core burst (what the non-DoS training windows captured), while
 DoS needs 120s because its training deliberately included the late flow events.
 
@@ -103,7 +103,7 @@ def ensure_index():
             "run_start":       {"type": "date"},
             "run_end":         {"type": "date"},
             "probs": {"properties": {c: {"type": "float"} for c in
-                      ["scan","brute_force","post_exploitation","web_attack","denial_of_service"]}},
+                      ["scan","online_guessing","post_exploitation","web_attack","denial_of_service"]}},
         }}}
         r = requests.put(f"{ES}/{PRED_INDEX}", json=mapping, timeout=30)
         print(f"created index '{PRED_INDEX}' (HTTP {r.status_code})")

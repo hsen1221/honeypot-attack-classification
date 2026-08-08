@@ -13,6 +13,15 @@
 *_backup
 *~
 
+
+# --- cache / temp / auto-generated ---
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db
+
+
 # ---- ALL stale/discarded data folders we created during fixes ----
 _stale-*/
 **/_stale-*/
@@ -21,9 +30,6 @@ _stale-*/
 # ---- docker-compose frozen snapshots (keep only the live one) ----
 docker-compose_frozen-*.yml
 
-# ---- trained model binaries (regenerable by retraining) ----
-# comment out if you WANT the .pkl versioned
-06-models/*.pkl
 
 # ---- screenshots / large binaries ----
 08-screenshots/

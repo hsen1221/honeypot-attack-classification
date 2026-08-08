@@ -1,6 +1,6 @@
 [
   "scan",
-  "brute_force",
+  "online_guessing",
   "post_exploitation",
   "web_attack",
   "denial_of_service"

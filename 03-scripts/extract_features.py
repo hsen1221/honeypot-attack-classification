@@ -101,7 +101,7 @@ def extract(run_id, label, docs):
     f["distinct_commands"] = len(cmds)
     
 # ---------- other-honeypot auth attempts (Dionaea FTP, Heralding VNC) ----------
-    # A real brute-force ATTEMPT means a password was actually submitted.
+    # A real online-guessing ATTEMPT means a password was actually submitted.
     # Counts non-empty passwords from Dionaea (FTP) and Heralding (VNC), which DO
     # record the guessed password. Excludes Dionaea-MySQL handshakes (password == "")
     # and connection-only records (password == None) -- those reached the service but
