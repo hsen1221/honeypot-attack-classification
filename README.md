@@ -15,7 +15,6 @@ Real attacks are generated in an isolated **T-Pot** lab, their telemetry is coll
 - [Large Files & Data](#large-files--data)
 - [Results](#results)
 - [Documentation](#documentation)
-- [Academic Use](#academic-use)
 
 ---
 
