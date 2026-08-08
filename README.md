@@ -71,13 +71,15 @@ tpot-project/
 │   └── 03-classifiers-comparison.ipynb        # six-model comparison + selection
 │
 ├── 06-models/
+│   ├── class_labels.json                # integer -> class-name map
 │   ├── deployed_model.json              # deployed XGBoost (portable native format)
+│   ├── deployed_model.pkl               # deployed XGBoost (pickle/joblib format)
 │   ├── deployed_model_meta.json         # params, CV scores, versions, class order
 │   ├── feature_columns.json             # the 32 feature names, in exact order
-│   ├── class_labels.json                # integer -> class-name map
 │   ├── model_comparison.csv             # the six-model leaderboard
-│   ├── rf_params.json                   # tuned Random Forest params
-│   └── rf_hyperparam_search.csv         # RF grid-search results
+│   ├── rf_hyperparam_search.csv         # RF grid-search results
+│   ├── rf_model.pkl                     # tuned Random Forest model (pickle format)
+│   └── rf_params.json                   # tuned Random Forest params
 │
 ├── 07-report/                        # report source (Markdown / companion docs)
 │   └── kibana-dashboard.md              # Kibana dashboard documentation
